@@ -1,0 +1,28 @@
+{
+  "name": "tracking-image-service",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "image-downloader": "^3.3.0",
+    "micro": "^9.0.0"
+  },
+  "devDependencies": {
+    "micro-dev": "^1.2.3"
+  },
+  "scripts": {
+    "start": "micro",
+    "dev": "micro-dev --cold",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/videal/node-tracking-image-service.git"
+  },
+  "author": "r.kurshakov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/videal/node-tracking-image-service/issues"
+  },
+  "homepage": "https://github.com/videal/node-tracking-image-service#readme"
+}

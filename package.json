@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "image-downloader": "^3.3.0",
-    "micro": "^9.0.0"
+    "memory-cache": "^0.2.0",
+    "micro": "^9.0.0",
+    "request": "^2.83.0"
   },
   "devDependencies": {
     "micro-dev": "^1.2.3"
@@ -19,7 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/videal/node-tracking-image-service.git"
   },
-  "author": "r.kurshakov",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/videal/node-tracking-image-service/issues"

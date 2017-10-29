@@ -3,9 +3,17 @@
  * */
 
 global.CONFIG = require('./config');
+global.Mongoose = require('mongoose');
 
 const micro = require('micro');
 const tis = require('./trackingImageService');
+
+// для работы с promise
+Mongoose.Promise = global.Promise;
+
+Mongoose.connect('mongodb://localhost/trackingImageService', {
+  useMongoClient: true,
+});
 
 module.exports = async (req, res) => {
 
@@ -15,7 +23,7 @@ module.exports = async (req, res) => {
     return;
   }
 
-  tis.saveUserInfo(req);
+  tis.saveUserInfo(req, imageUrl);
 
   try {
     let image = await tis.getImage(imageUrl);

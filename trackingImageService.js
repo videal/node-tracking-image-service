@@ -1,21 +1,21 @@
-const parse = require('url').parse;
-const request = require('request');
-const cache = require('memory-cache');
-const UserFactory = require('./user');
+const Parse = require('url').parse;
+const Request = require('request');
+const Cache = require('memory-cache');
+const UserService = require('./UserService');
 
 const TrackingImageService = function () {};
 
 /**
  * Parse Request Uri and returns Image Url if found
- * @param     {*}       req - Request
+ * @param     {*}       request - Request
  * @returns   {string}  url - Image Url from request
  */
-TrackingImageService.prototype.getImageUrl = req => {
-  let params = parse(req.url, true);
-  if (!params.query[CONFIG.parameterName]) {
+TrackingImageService.prototype.getImageUrl = request => {
+  let params = Parse(request.url, true);
+  if (!params.query[TrackingServiceConfig.parameterName]) {
     return '';
   }
-  return params.query[CONFIG.parameterName];
+  return params.query[TrackingServiceConfig.parameterName];
 };
 
 /**
@@ -25,41 +25,43 @@ TrackingImageService.prototype.getImageUrl = req => {
  */
 TrackingImageService.prototype.getImage = url => new Promise((resolve, reject) => {
 
-  let image = cache.get(url);
+  let image = Cache.get(url);
 
   if (image) {
     resolve(image);
   }
 
-  request.get(url, (err, result, body) => {
-    if (!err && result.statusCode !== 200) {
-      console.error("ERROR: " + err);
-      reject(err);
+  Request.get(url, (error, result, body) => {
+    if (!error && result.statusCode !== 200) {
+      console.error("ERROR: " + error);
+      reject(error);
     }
     image = {'headers': result.headers, 'body': body};
-    cache.put(url, image, CONFIG.cacheTime * 1000);
+    Cache.put(url, image, TrackingServiceConfig.cacheTime * 1000);
     resolve(image);
   })
 });
 
 /**
  * Saves info about user
- * @param     {*}       req - Request
+ * @param     {*}       request - Request
  * @param     {string}  imageUrl - requested image url
  * @returns   {boolean}
  */
-TrackingImageService.prototype.saveUserInfo = async (req, imageUrl) => {
-  let users = new UserFactory();
-  let user = await users.getUser(req.socket.remoteAddress, req.headers['user-agent']);
+TrackingImageService.prototype.saveUserInfo = async (request, imageUrl) => {
+  let user = UserService.getUser(request.socket.remoteAddress, request.headers['user-agent']);
+
+/*
 
   user.requestedImages.push({ url: imageUrl, date: new Date() });
 
-  user.save(err => {
-    if (err) {
-      return console.log(err);
+  user.save(error => {
+    if (error) {
+      return console.log(error);
     }
   });
 
+*/
   return true;
 };
 

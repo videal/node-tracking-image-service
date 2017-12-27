@@ -49,19 +49,17 @@ TrackingImageService.prototype.getImage = url => new Promise((resolve, reject) =
  * @returns   {boolean}
  */
 TrackingImageService.prototype.saveUserInfo = async (request, imageUrl) => {
-  let user = UserService.getUser(request.socket.remoteAddress, request.headers['user-agent']);
-
-/*
+  let user = await UserService.getUser(request.socket.remoteAddress, request.headers['user-agent']);
 
   user.requestedImages.push({ url: imageUrl, date: new Date() });
 
   user.save(error => {
     if (error) {
-      return console.log(error);
+      console.log(error);
+      return error;
     }
   });
 
-*/
   return true;
 };
 

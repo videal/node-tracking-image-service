@@ -7,6 +7,7 @@ global.TrackingServiceConfig = require('./config');
 const micro = require('micro');
 
 const trackingService = require('./trackingImageService');
+const fs = require('fs');
 
 module.exports = async (request, response) => {
 
@@ -27,7 +28,17 @@ module.exports = async (request, response) => {
     response.end(image.body, 'binary');
 
   } catch (error) {
-    micro.send(error, 500);
+
+    let fakeImage = './public/image-not-found.png';
+    let fakeImageStat = fs.statSync(fakeImage);
+
+    response.writeHead(200, {
+      'Content-Type': 'image/png',
+      'Content-Length': fakeImageStat.size
+    });
+
+    let readStream = fs.createReadStream(fakeImage);
+    readStream.pipe(response);
   }
 };
 

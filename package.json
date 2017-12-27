@@ -10,7 +10,7 @@
     "request": "^2.83.0"
   },
   "devDependencies": {
-    "micro-dev": "^1.2.3"
+    "micro-dev": "^1.4.0"
   },
   "scripts": {
     "start": "micro",
